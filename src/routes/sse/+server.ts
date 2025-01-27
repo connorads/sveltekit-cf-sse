@@ -3,16 +3,21 @@ export const GET = async () => {
 	const writer = writable.getWriter();
 
 	async function myBackendCode() {
-		while (true) {
-			// TODO handle rejected promises? Try refreshing the page a few times
-			await writer.write(new TextEncoder().encode("Hello there, let's stream some data lad"));
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-			await writer.write(new TextEncoder().encode('Moar data'));
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-			await writer.write(new TextEncoder().encode('Even moar data'));
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-			await writer.write(new TextEncoder().encode('wahwahweewah'));
-			await new Promise((resolve) => setTimeout(resolve, 1000));
+		try {
+            let n = 7;
+			while (n-- > 0) {
+				await writer.write(new TextEncoder().encode("Hello there, let's stream some data lad"));
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+				await writer.write(new TextEncoder().encode('Moar data'));
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+				await writer.write(new TextEncoder().encode('Even moar data'));
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+				await writer.write(new TextEncoder().encode('wahwahweewah'));
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+			}
+			await writer.write(new TextEncoder().encode("That's all folks!"));
+		} finally {
+			await writer.close();
 		}
 	}
 
